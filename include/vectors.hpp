@@ -1,13 +1,11 @@
-#ifndef ALIB_VECTORS_HPP
+#ifndef VECTORS_HPP
 
 #include <cmath>
-
-namespace alib
-{
+#include <type_traits>
+#include "utils.hpp"
 
 template<class T>
 class vec3;
-
 
 template<class T> T Dot(const vec3<T>& lhs, const vec3<T>& rhs);
 template<class T> vec3<T> Cross(const vec3<T>& lhs, const vec3<T>& rhs);
@@ -17,10 +15,12 @@ template<class T> vec3<T> operator-(const vec3<T>& lhs, const vec3<T>& rhs);
 template<class T> vec3<T> operator*(const vec3<T>& lhs, const T& scalar);
 template<class T> vec3<T> operator/(const vec3<T>& lhs, const T& scalar);
 
-template<class T> vec3<T> operator+=(const vec3<T>& lhs, const vec3<T>& rhs);
-template<class T> vec3<T> operator-=(const vec3<T>& lhs, const vec3<T>& rhs);
-template<class T> vec3<T> operator*=(const vec3<T>& lhs, const T& scalar);
-template<class T> vec3<T> operator/=(const vec3<T>& lhs, const T& scalar);
+template<class T> vec3<T> operator+=(vec3<T>& lhs, vec3<T>& rhs);
+template<class T> vec3<T> operator-=(vec3<T>& lhs, vec3<T>& rhs);
+template<class T> vec3<T> operator*=(vec3<T>& lhs, const T& scalar);
+template<class T> vec3<T> operator/=(vec3<T>& lhs, const T& scalar);
+
+template<class T> bool operator==(const vec3<T>& lhs, const vec3<T>& rhs);
 
 template<class T>
 class vec3
@@ -39,7 +39,4 @@ public:
 
 #include "../source/vectors.tpp"
 
-} // namespace alib
-
-
-#endif // ALIB_VECTORS_HPP
+#endif // VECTORS_HPP

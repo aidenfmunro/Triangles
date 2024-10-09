@@ -1,21 +1,22 @@
-# Minimum version of CMake
 cmake_minimum_required(VERSION 3.10)
+project(Triangles)
 
-# Project name and version
-project(Triangles VERSION 1.0)
-
-# Set C++ standard (optional)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Include directory for header files
+include(FetchContent)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/release-1.12.1.zip
+)
+FetchContent_MakeAvailable(googletest)
+
 include_directories(include)
 
-# Add the executable by specifying all .cpp files from source folder
-file(GLOB SOURCES "source/*.cpp")
+add_executable(VectorsTests tests/vectors_test.cpp source/utils.cpp)
 
-# Create the executable
-add_executable(main ${SOURCES})
+# Link Google Test libraries
+target_link_libraries(VectorsTests gtest gtest_main)
 
-# Link the include directory for headers
-target_include_directories(main PRIVATE ${PROJECT_SOURCE_DIR}/include)
+# Add test cases
+add_test(NAME VectorsTest COMMAND TriangleTests)

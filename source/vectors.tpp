@@ -1,3 +1,4 @@
+#include <type_traits>
 template<class T>
 vec3<T>::vec3(T _x, T _y, T _z)
     : x(_x),
@@ -41,7 +42,7 @@ vec3<T> operator+(const vec3<T>& lhs, const vec3<T>& rhs)
 template<class T>
 vec3<T> operator-(const vec3<T>& lhs, const vec3<T>& rhs)
 {
-    return vec3<T>(lhs.x - rhs.x, lhs.x - rhs.y, lhs.z - rhs.z);
+    return vec3<T>(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
 }
 
 template<class T>
@@ -59,7 +60,7 @@ vec3<T> operator/(const vec3<T>& lhs, const T& scalar)
 
 
 template<class T>
-vec3<T> operator+=(const vec3<T>& lhs, const vec3<T>& rhs)
+vec3<T> operator+=(vec3<T>& lhs, vec3<T>& rhs)
 {
     lhs.x += rhs.x;
     lhs.y += rhs.y;
@@ -69,7 +70,7 @@ vec3<T> operator+=(const vec3<T>& lhs, const vec3<T>& rhs)
 }
 
 template<class T>
-vec3<T> operator-=(const vec3<T>& lhs, const vec3<T>& rhs)
+vec3<T> operator-=(vec3<T>& lhs, vec3<T>& rhs)
 {
     lhs.x -= rhs.x;
     lhs.y -= rhs.y;
@@ -80,7 +81,7 @@ vec3<T> operator-=(const vec3<T>& lhs, const vec3<T>& rhs)
 
 
 template<class T>
-vec3<T> operator*=(const vec3<T>& lhs, const T& scalar)
+vec3<T> operator*=(vec3<T>& lhs, const T& scalar)
 {
     lhs.x *= scalar;
     lhs.y *= scalar;
@@ -90,11 +91,28 @@ vec3<T> operator*=(const vec3<T>& lhs, const T& scalar)
 }
 
 template<class T>
-vec3<T> operator/=(const vec3<T>& lhs, const T& scalar)
+vec3<T> operator/=(vec3<T>& lhs, const T& scalar)
 {
     lhs.x /= scalar;
     lhs.y /= scalar;
     lhs.z /= scalar;
 
     return lhs;
+}
+
+template<class T>
+bool operator==(const vec3<T>& lhs, const vec3<T>& rhs)
+{
+    if (std::is_floating_point_v<T>)
+    {
+        return utils::doubleCompare(lhs.x, rhs.x)
+            && utils::doubleCompare(lhs.y, rhs.y)
+            && utils::doubleCompare(lhs.z, rhs.z);
+    }
+    else
+    {
+        return lhs.x == rhs.x
+            && lhs.y == rhs.y
+            && lhs.z == rhs.z;
+    }
 }
