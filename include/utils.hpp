@@ -14,6 +14,4 @@ namespace utils
     }
 } // namespace utils
 
-
-
 #endif
